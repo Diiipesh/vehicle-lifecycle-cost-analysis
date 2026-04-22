@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(page_title="Vehicle Lifecycle Cost Analysis", layout="wide")
-st.title("🚗 Vehicle Lifecycle Cost Analysis")
+st.title("Vehicle Lifecycle Cost Analysis")
 
 # -------- Load Data Safely --------
 @st.cache_data
@@ -59,19 +59,19 @@ fdf["Total_Cost"] = fdf.apply(tco, axis=1)
 fdf["Cost_per_km"] = fdf["Total_Cost"] / (years * annual_km)
 
 # -------- Display --------
-st.subheader("📊 Comparison")
+st.subheader("Comparison")
 st.dataframe(
     fdf[["Powertrain","Total_Cost","Cost_per_km"]]
     .sort_values("Total_Cost")
 )
 
 # -------- Simple Bar Chart (no matplotlib needed) --------
-st.subheader("📈 Total Cost by Powertrain")
+st.subheader("Total Cost by Powertrain")
 chart_df = fdf.set_index("Powertrain")[["Total_Cost"]]
 st.bar_chart(chart_df)
 
 # -------- Breakdown (selected powertrain) --------
-st.subheader("🔍 Cost Breakdown")
+st.subheader("Cost Breakdown")
 pt = st.selectbox("Select Powertrain", fdf["Powertrain"])
 row = fdf[fdf["Powertrain"] == pt].iloc[0]
 
@@ -87,7 +87,7 @@ breakdown = pd.Series({
 st.write("Breakdown (₹):")
 st.dataframe(breakdown.rename("Cost").to_frame())
 
-st.subheader("📊 Breakdown Chart")
+st.subheader("Breakdown Chart")
 st.bar_chart(breakdown)
 
 # -------- Insight --------
